@@ -1,73 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		{% block head %}
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>index</title>
-		<meta name="author" content="ezioruan" />
+<head>
+    <link rel="stylesheet" href="/style.css" />
+    <title>{% block title %}User test{% endblock %}</title>
+</head>
 
-		<link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="{{STATIC_URL}}css/docs.css" rel="stylesheet" type="text/css">
-		<link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet" type="text/css">
-		<link href="{{STATIC_URL}}css/LightFace.css" rel="stylesheet" type="text/css">
+<body>
+    <div id="header">
+        {% block header %}
+	<a href="{% url index %}">{% trans "Home" %}</a> | 
 
-		<script type="text/javascript" src="{{STATIC_URL}}js/base64.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/prettify.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/mootools-core-1.4.5-full-compat.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/mootools-more-drag.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/LightFace.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/LightFace.IFrame.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/LightFace.Image.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/LightFace.Request.js"></script>
-		<script type="text/javascript" src="{{STATIC_URL}}js/LightFace.Static.js"></script>
-		{%  endblock %}
-		{% block head_extend%}
-		{% endblock %}
-	</head>
-	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="brand" href="./index.html">Bootstrap</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li class="active">
-								<a href="./index.html">Home</a>
-							</li>
-							<li class="">
-								<a href="./getting-started.html">Get started</a>
-							</li>
-							<li class="">
-								<a href="./scaffolding.html">Scaffolding</a>
-							</li>
-							<li class="">
-								<a href="./base-css.html">Base CSS</a>
-							</li>
-							<li class="">
-								<a href="./components.html">Components</a>
-							</li>
-							<li class="">
-								<a href="./javascript.html">Javascript</a>
-							</li>
-							<li class="">
-								<a href="./customize.html">Customize</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		{% block body %}
-		{% endblock %}
-	</body>
+	{% if user.is_authenticated %}
+	{% trans "Logged in" %}: {{ user.username }} 
+	(<a href="{% url auth_logout %}">{% trans "Log out" %}</a> | 
+	<a href="{% url auth_password_change %}">{% trans "Change password" %}</a>)
+	{% else %}
+	<a href="{% url auth_login %}">{% trans "Log in" %}</a>
+	{% endif %}
+	<hr />
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">
+        {% block footer %}
+        <hr />
+        {% endblock %}
+    </div>
+</body>
+
 </html>
-
